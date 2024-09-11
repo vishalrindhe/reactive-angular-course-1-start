@@ -5,6 +5,7 @@ import {catchError, delay, delayWhen, filter, finalize, map, retryWhen, shareRep
 import { HttpClient } from '@angular/common/http';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {CourseDialogComponent} from '../course-dialog/course-dialog.component';
+import { CoursesService } from '../courses.service';
 
 
 @Component({
@@ -14,29 +15,29 @@ import {CourseDialogComponent} from '../course-dialog/course-dialog.component';
 })
 export class HomeComponent implements OnInit {
 
-  beginnerCourses: Course[];
+  beginnerCourses$: Observable<Course[]>;
 
-  advancedCourses: Course[];
+  advancedCourses$: Observable<Course[]>;
 
 
-  constructor(private http: HttpClient, private dialog: MatDialog) {
+  constructor(private coursesService:CoursesService, private dialog: MatDialog) {
 
   }
 
   ngOnInit() {
-
-    this.http.get('/api/courses')
-      .subscribe(
-        res => {
-
-          const courses: Course[] = res["payload"].sort(sortCoursesBySeqNo);
-
-          this.beginnerCourses = courses.filter(course => course.category == "BEGINNER");
-
-          this.advancedCourses = courses.filter(course => course.category == "ADVANCED");
-
-        });
-
+    const courses$ = this.coursesService.loadAllCourses()
+    .pipe(
+      map(r => r.sort(sortCoursesBySeqNo))
+    )
+    this.beginnerCourses$ = courses$
+    .pipe(
+      map(c => c.filter((r:any) => r.category == 'BEGINNER'))
+    )
+    this.advancedCourses$ = courses$
+    .pipe(
+      map(c => c.filter((r:any) => r.category == 'ADVANCED'))
+    )
+    
   }
 
   editCourse(course: Course) {
