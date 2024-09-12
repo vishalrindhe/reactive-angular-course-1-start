@@ -25,6 +25,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.reloadData()
+    
+  }
+
+  reloadData(){
     const courses$ = this.coursesService.loadAllCourses()
     .pipe(
       map(r => r.sort(sortCoursesBySeqNo))
@@ -37,21 +42,6 @@ export class HomeComponent implements OnInit {
     .pipe(
       map(c => c.filter((r:any) => r.category == 'ADVANCED'))
     )
-    
-  }
-
-  editCourse(course: Course) {
-
-    const dialogConfig = new MatDialogConfig();
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = "400px";
-
-    dialogConfig.data = course;
-
-    const dialogRef = this.dialog.open(CourseDialogComponent, dialogConfig);
-
   }
 
 }
