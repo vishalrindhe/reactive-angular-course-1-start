@@ -34,14 +34,14 @@ export class HomeComponent implements OnInit {
     this.loadingService.loadingOn()
     const courses$ = this.coursesService.loadAllCourses()
     .pipe(
-      map(r => r.sort(sortCoursesBySeqNo)),
-      finalize(() => this.loadingService.loadingOff())
+      map(r => r.sort(sortCoursesBySeqNo))
     )
-    this.beginnerCourses$ = courses$
+    let loadeeCourse$ = this.loadingService.showLoaderUntilCompleted<Course[]>(courses$)
+    this.beginnerCourses$ = loadeeCourse$
     .pipe(
       map(c => c.filter((r:any) => r.category == 'BEGINNER'))
     )
-    this.advancedCourses$ = courses$
+    this.advancedCourses$ = loadeeCourse$
     .pipe(
       map(c => c.filter((r:any) => r.category == 'ADVANCED'))
     )
