@@ -71,7 +71,7 @@ import { LoadingService } from './loading/loading.service';
         MatDatepickerModule,
         MatMomentDateModule,
         ReactiveFormsModule], providers: [
-            LoadingService,
+            // LoadingService,
         provideHttpClient(withInterceptorsFromDi())
     ] })
 export class AppModule {

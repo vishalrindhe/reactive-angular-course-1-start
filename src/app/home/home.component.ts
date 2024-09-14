@@ -26,12 +26,15 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.loadingService.aaa);
+    this.loadingService.aaa = '1'
+  console.log('home component...');
+  console.log(this.loadingService.aaa);
     this.reloadData()
     
   }
 
   reloadData(){
-    this.loadingService.loadingOn()
     const courses$ = this.coursesService.loadAllCourses()
     .pipe(
       map(r => r.sort(sortCoursesBySeqNo))
