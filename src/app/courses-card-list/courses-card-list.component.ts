@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Course } from '../model/course';
 import { CourseDialogComponent } from '../course-dialog/course-dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -8,12 +8,16 @@ import { filter, tap } from 'rxjs/operators';
   selector: 'courses-card-list',
   standalone: false,
   templateUrl: './courses-card-list.component.html',
-  styleUrl: './courses-card-list.component.scss'
+  styleUrl: './courses-card-list.component.scss',
+  changeDetection : ChangeDetectionStrategy.OnPush
 })
-export class CoursesCardListComponent {
+export class CoursesCardListComponent implements OnInit {
 @Input() courses : Course[] = []
 @Output() coursesChanged = new EventEmitter<any>()
+abcd = 1
 constructor(private dialog: MatDialog){}
+  ngOnInit(): void {
+  }
 editCourse(course: Course) {
 
   const dialogConfig = new MatDialogConfig();
