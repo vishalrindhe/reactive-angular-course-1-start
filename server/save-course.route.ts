@@ -10,7 +10,7 @@ export function saveCourse(req: Request, res: Response) {
   res.sendStatus(500);
   return;
 
-  */
+  // */
 
     const id = req.params["id"],
         changes = req.body;

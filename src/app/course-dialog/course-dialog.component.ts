@@ -7,12 +7,14 @@ import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import { CoursesService } from '../courses.service';
 import { LoadingService } from '../loading/loading.service';
+import { MessagesService } from '../messages/messages.serivce';
+import { CoursesStoreService } from '../courses.store';
 
 @Component({
     selector: 'course-dialog',
     templateUrl: './course-dialog.component.html',
     styleUrls: ['./course-dialog.component.css'],
-    providers : [LoadingService]
+    providers : [LoadingService, MessagesService]
 })
 export class CourseDialogComponent implements OnInit, AfterViewInit {
 
@@ -24,8 +26,9 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
         private fb: FormBuilder,
         private dialogRef: MatDialogRef<CourseDialogComponent>,
         @Inject(MAT_DIALOG_DATA) course:Course,
-    private coursesService: CoursesService,
-    private loadingService : LoadingService) {    
+    private coursesStoreService: CoursesStoreService,
+    private loadingService : LoadingService,
+private messagesService:MessagesService) {    
         this.course = course;
 
         this.form = fb.group({
@@ -49,13 +52,15 @@ export class CourseDialogComponent implements OnInit, AfterViewInit {
 
     save() {
       const changes = this.form.value;
-      let saveCourse$ = this.coursesService.saveCourse(this.course.id,changes)
-      let loaderCourse$ = this.loadingService.showLoaderUntilCompleted(saveCourse$)
-      loaderCourse$.subscribe(
-        (val) =>{
-            this.dialogRef.close(val)
-        }
-      )
+      let saveCourse$ = this.coursesStoreService.saveCourse(this.course.id,changes).subscribe()
+    //   let loaderCourse$ = this.loadingService.showLoaderUntilCompleted(saveCourse$)
+      this.dialogRef.close()
+
+    //   loaderCourse$.subscribe(
+    //     (val) =>{
+    //         this.dialogRef.close(val)
+    //     }
+    //   )
 
     }
 
