@@ -5,10 +5,10 @@ import {catchError, delay, delayWhen, filter, finalize, map, retryWhen, shareRep
 import { HttpClient } from '@angular/common/http';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {CourseDialogComponent} from '../course-dialog/course-dialog.component';
-import { CoursesService } from '../courses.service';
+import { CoursesService } from '../services/courses.service';
 import { LoadingService } from '../loading/loading.service';
 import { MessagesService } from '../messages/messages.serivce';
-import { CoursesStoreService } from '../courses.store';
+import { CoursesStoreService } from '../services/courses.store';
 
 
 @Component({

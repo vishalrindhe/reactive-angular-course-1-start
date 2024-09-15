@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, throwError } from "rxjs";
-import { Course, sortCoursesBySeqNo } from "./model/course";
-import { MessagesService } from "./messages/messages.serivce";
-import { LoadingService } from "./loading/loading.service";
+import { Course, sortCoursesBySeqNo } from "../model/course";
+import { MessagesService } from "../messages/messages.serivce";
+import { LoadingService } from "../loading/loading.service";
 import { HttpClient } from "@angular/common/http";
 import { catchError, map, shareReplay, tap } from "rxjs/operators";
 

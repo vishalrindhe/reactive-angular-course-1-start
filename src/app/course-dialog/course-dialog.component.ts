@@ -5,10 +5,10 @@ import {FormBuilder, Validators, FormGroup} from "@angular/forms";
 import moment from 'moment';
 import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
-import { CoursesService } from '../courses.service';
+import { CoursesService } from '../services/courses.service';
 import { LoadingService } from '../loading/loading.service';
 import { MessagesService } from '../messages/messages.serivce';
-import { CoursesStoreService } from '../courses.store';
+import { CoursesStoreService } from '../services/courses.store';
 
 @Component({
     selector: 'course-dialog',
