@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Course } from "../model/course";
 import { map, shareReplay } from "rxjs/operators";
+import { Lesson } from "../model/lesson";
 
 @Injectable({
     providedIn:'root'
@@ -22,6 +23,17 @@ export class CoursesService{
     saveCourse(courseId:string, changes : Partial<Course>):Observable<any>{
         return this.http.put(`/api/courses/${courseId}`, changes)
         .pipe(
+            shareReplay()
+        )
+    }
+    searchLessons(val: string):Observable<Lesson[]>{
+        return this.http.get('/api/lessons',{
+            params : {
+                filter : val,
+                pageSize : '100'
+            }
+        }).pipe(
+            map(res => res?.['payload']),
             shareReplay()
         )
     }
